@@ -83,6 +83,7 @@ void main() {
     final features = await featuresFromGeoJsonFile(File("test/data.geojson"));
     expect(features.collection.length, 1);
     final feature = features.collection[0];
+    expect(feature.id, "feature_id");
     expect(feature.type, GeoJsonFeatureType.point);
     final point = feature.geometry as GeoJsonPoint;
     expect(point.geoPoint.latitude, 0);
@@ -99,15 +100,15 @@ void main() {
   });*/
 
   test("point properties", () async {
-    final gfc = GeoJsonFeatureCollection()..name="mapmatch";
+    final gfc = GeoJsonFeatureCollection()..name = "mapmatch";
     final lprops = Map<String, dynamic>();
     lprops["point_color"] = "#000";
     lprops["point_size"] = "7";
     final lp = GeoJsonFeature<GeoJsonPoint>()
-      ..type=GeoJsonFeatureType.point
-      ..properties=lprops
-      ..geometry=GeoJsonPoint(
-        geoPoint: GeoPoint(latitude: 37.111, longitude: 126.000), name: "a");
+      ..type = GeoJsonFeatureType.point
+      ..properties = lprops
+      ..geometry = GeoJsonPoint(
+          geoPoint: GeoPoint(latitude: 37.111, longitude: 126.000), name: "a");
     gfc.collection.add(lp);
     final s = gfc.serialize();
     expect(s.contains("\"point_size\":\"7\""), true);

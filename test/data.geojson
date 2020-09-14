@@ -3,6 +3,7 @@
   "features": [
     {
       "type": "Feature",
+      "id": "feature_id",
       "properties": {"name": "point"},
       "geometry": {
         "type": "Point",

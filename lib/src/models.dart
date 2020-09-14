@@ -57,6 +57,9 @@ class GeoJsonFeatureCollection {
 
 /// A geojson feature
 class GeoJsonFeature<T> {
+  /// Id of the feature
+  String id;
+
   /// The type of the feature
   GeoJsonFeatureType type;
 
@@ -175,11 +178,13 @@ class GeoJsonPoint {
   String name;
 
   /// Serialize to a geojson feature string
-  String serializeFeature(Map properties)  {
+  String serializeFeature(Map properties) {
     final p = properties ?? <String, dynamic>{};
     return '{"type":"Feature","properties":${jsonEncode(p)},'
-      '"geometry":{"type":"Point",'
-      '"coordinates":' + geoPoint.toGeoJsonCoordinatesString() + '}}';
+            '"geometry":{"type":"Point",'
+            '"coordinates":' +
+        geoPoint.toGeoJsonCoordinatesString() +
+        '}}';
   }
 }
 

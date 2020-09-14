@@ -467,6 +467,7 @@ class GeoJson {
       if (feat.containsKey("properties")) {
         properties = feat["properties"] as Map<String, dynamic>;
       }
+      final id = feat["id"] as String;
       final geometry = feat["geometry"] as Map<String, dynamic>;
       final geomType = geometry["type"].toString();
       GeoJsonFeature feature;
@@ -548,6 +549,8 @@ class GeoJson {
           final e = FeatureNotSupported(geomType);
           throw e;
       }
+      feature.id = id;
+
       if (query != null && properties != null) {
         if (!_checkProperty(properties, query)) {
           continue;
