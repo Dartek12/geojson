@@ -4,6 +4,7 @@ import "package:geojson/geojson.dart";
 import 'package:geopoint/geopoint.dart';
 import "package:test/test.dart";
 
+import '../lib/src/exceptions.dart';
 import 'data.dart';
 
 void main() {
@@ -118,5 +119,11 @@ void main() {
     final s = gfc.serialize();
     expect(s.contains("\"point_size\":\"7\""), true);
     expect(s.contains("\"point_color\":\"#000\""), true);
+  });
+
+  test("can catch parse exception", () async {
+    await featuresFromGeoJson(geojsonInvalid).catchError((dynamic e) {
+      expect(e.runtimeType.toString(), "ParseErrorException");
+    });
   });
 }

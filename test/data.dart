@@ -146,3 +146,11 @@ String geojsonUnsupported = """{
     }
   ]
 }""";
+String geojsonInvalid = """{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      invalid_feature
+    }
+  ]
+}""";

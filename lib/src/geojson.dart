@@ -9,6 +9,7 @@ import 'package:pedantic/pedantic.dart';
 
 import 'deserializers.dart';
 import 'exceptions.dart';
+import 'exceptions.dart';
 import 'models.dart';
 
 /// The main geojson class
@@ -207,24 +208,25 @@ class GeoJson {
       bool verbose,
       GeoJsonQuery query,
       bool disableStream}) async {
-    final finished = Completer<void>();
+    final completer = Completer<void>();
     Iso iso;
     iso = Iso(_processFeaturesIso, onDataOut: (dynamic data) {
       if (data is GeoJsonFeature) {
         _pipeFeature(data, disableStream: disableStream);
       } else {
         iso.dispose();
-        finished.complete();
+        completer.complete();
+        _endSignalController.sink.add(true);
       }
     }, onError: (dynamic e) {
-      print("Error: $e");
-      throw ParseErrorException("Can not parse geojson");
+      final error = ParseErrorException(e.toString());
+      completer.completeError(error);
+      _endSignalController.sink.add(true);
     });
     final dataToProcess = _DataToProcess(
         data: data, nameProperty: nameProperty, verbose: verbose, query: query);
     unawaited(iso.run(<dynamic>[dataToProcess]));
-    await finished.future;
-    _endSignalController.sink.add(true);
+    return completer.future;
   }
 
   /// Search a [GeoJsonFeature] by prpperty from a file
