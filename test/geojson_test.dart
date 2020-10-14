@@ -60,6 +60,11 @@ void main() {
     expect(multipolygon.polygons.length, 3);
   });
 
+  test("null geometry", () async {
+    final features = await featuresFromGeoJson(geoJsonEmptyGeometry);
+    expect(features.collection.length, 0);
+  });
+
   test("wrongfile", () async {
     await featuresFromGeoJsonFile(File("test/wrong.geojson"))
         .catchError((dynamic e) {

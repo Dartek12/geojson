@@ -469,6 +469,10 @@ class GeoJson {
       }
       final id = feat["id"] as String;
       final geometry = feat["geometry"] as Map<String, dynamic>;
+      if (geometry == null) {
+        continue;
+      }
+
       final geomType = geometry["type"].toString();
       GeoJsonFeature feature;
       switch (geomType) {

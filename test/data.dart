@@ -123,6 +123,16 @@ String geojsonMultiPolygon = """{
     }
   ]
 }""";
+String geoJsonEmptyGeometry = """{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {"name": "point"},
+      "geometry": null
+    }
+  ]
+}""";
 String geojsonUnsupported = """{
   "type": "FeatureCollection",
   "features": [
